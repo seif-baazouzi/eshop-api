@@ -2,7 +2,11 @@ module gitlab.com/seif-projects/e-shop/api
 
 go 1.18
 
-require github.com/gofiber/fiber/v2 v2.35.0
+require (
+	github.com/gofiber/fiber/v2 v2.35.0
+	github.com/gomodule/redigo v1.8.9
+	github.com/lib/pq v1.10.6
+)
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
