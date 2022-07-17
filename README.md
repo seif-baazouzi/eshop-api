@@ -15,3 +15,8 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 
 - POST    /login    { email, password }
 - POST    /signup   { email, username, password }
+
+## Shop Routes
+
+- GET     /shops
+- PUT     /shops/:shopName/rate { rate }

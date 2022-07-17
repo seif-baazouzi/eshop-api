@@ -48,16 +48,3 @@ func IsUser(c *fiber.Ctx) error {
 
 	return c.Next()
 }
-
-func IsAdmin(c *fiber.Ctx) error {
-	claims := getJWTClaims(c)
-
-	if claims == nil || claims["admin"] == nil {
-		return c.JSON(fiber.Map{"message": "invalid-token"})
-	}
-
-	admin := claims["admin"].(string)
-	c.Locals("admin", admin)
-
-	return c.Next()
-}
