@@ -24,6 +24,7 @@ func main() {
 	defer db.Redis.Close()
 
 	routes.SetupAuthRoutes(app)
+	routes.SetupShopsRoutes(app)
 
 	app.Listen(":3000")
 }
