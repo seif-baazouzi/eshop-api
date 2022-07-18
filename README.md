@@ -22,4 +22,5 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 - GET     /shops/user
 - POST    /shops            { name, description }
 - PUT     /shops/:shopName  { name, description }
+- DELETE  /shops/:shopName
 - PUT     /shops/:shopName/rate { rate }

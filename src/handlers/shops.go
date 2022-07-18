@@ -141,7 +141,7 @@ func GetUserShops(c *fiber.Ctx) error {
 
 // @Description add a shop
 // @Success 200 {object} message
-// @router /shops/:shopName/rate [post]
+// @router /shops [post]
 func AddShop(c *fiber.Ctx) error {
 	conn := db.GetPool()
 	defer db.ClosePool(conn)
@@ -190,9 +190,9 @@ func AddShop(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{"message": "success"})
 }
 
-// @Description add a shop
+// @Description edit a shop
 // @Success 200 {object} message
-// @router /shops/:shopName/rate [post]
+// @router /shops/:shopName [put]
 func EditShop(c *fiber.Ctx) error {
 	conn := db.GetPool()
 	defer db.ClosePool(conn)
@@ -227,11 +227,35 @@ func EditShop(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{"shopName": "This shop is already exist"})
 	}
 
-	// add shop
+	// edit shop
 	_, err = conn.Exec(
 		"UPDATE shops set shopName = $1, shopDescription = $2 WHERE shopName = $3 AND owner = $4",
 		shop.ShopName,
 		shop.ShopDescription,
+		shopName,
+		username,
+	)
+
+	if err != nil {
+		return utils.ServerError(c, err)
+	}
+
+	return c.JSON(fiber.Map{"message": "success"})
+}
+
+// @Description edit a shop
+// @Success 200 {object} message
+// @router /shops/:shopName [delete]
+func DeleteShop(c *fiber.Ctx) error {
+	conn := db.GetPool()
+	defer db.ClosePool(conn)
+
+	username := c.Locals("username")
+	shopName := c.Params("shopName")
+
+	// delete shop
+	_, err := conn.Exec(
+		"DELETE FROM shops WHERE shopName = $1 AND owner = $2",
 		shopName,
 		username,
 	)
