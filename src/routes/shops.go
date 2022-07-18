@@ -3,7 +3,7 @@ package routes
 import (
 	"github.com/gofiber/fiber/v2"
 	"gitlab.com/seif-projects/e-shop/api/src/auth"
-	"gitlab.com/seif-projects/e-shop/api/src/handlers"
+	handlers "gitlab.com/seif-projects/e-shop/api/src/handlers/shops"
 )
 
 func SetupShopsRoutes(app *fiber.App) {
