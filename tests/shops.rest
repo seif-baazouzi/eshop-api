@@ -7,6 +7,17 @@ X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ
 
 ###
 
+POST  http://127.0.0.1:3000/shops
+X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ.OntVj6u8x_LkKSS_R76aE03-SgTxmEBcMGng3TivPiA
+Content-Type: application/json
+
+{
+  "shopName": "test",
+  "shopDescription": "This is a description"
+}
+
+###
+
 PUT http://127.0.0.1:3000/shops/testShop/rate
 X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ.OntVj6u8x_LkKSS_R76aE03-SgTxmEBcMGng3TivPiA
 Content-Type: application/json

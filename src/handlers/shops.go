@@ -7,6 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"gitlab.com/seif-projects/e-shop/api/src/db"
 	"gitlab.com/seif-projects/e-shop/api/src/models"
+	"gitlab.com/seif-projects/e-shop/api/src/tests"
 	"gitlab.com/seif-projects/e-shop/api/src/utils"
 )
 
@@ -85,9 +86,9 @@ func GetAllShops(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{"shops": shopsList})
 }
 
-// @Description get all shops list
+// @Description get user shops list
 // @Success 200 {array} Shop
-// @router /shops [get]
+// @router /shops/user [get]
 func GetUserShops(c *fiber.Ctx) error {
 	conn := db.GetPool()
 	defer db.ClosePool(conn)
@@ -136,6 +137,57 @@ func GetUserShops(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(fiber.Map{"shops": shopsList})
+}
+
+// @Description add a shop
+// @Success 200 {object} message
+// @router /shops/:shopName/rate [post]
+func AddShop(c *fiber.Ctx) error {
+	conn := db.GetPool()
+	defer db.ClosePool(conn)
+
+	username := c.Locals("username")
+
+	// check shop
+	var shop models.Shop
+	err := c.BodyParser(&shop)
+
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})
+	}
+
+	errors := tests.CheckShop(shop)
+	if errors != nil {
+		return c.JSON(errors)
+	}
+
+	// check if shop is already exist
+	rows, err := conn.Query(
+		"SELECT 1 FROM shops WHERE shopName = $1",
+		shop.ShopName,
+	)
+
+	if err != nil {
+		return utils.ServerError(c, err)
+	}
+
+	if rows.Next() {
+		return c.JSON(fiber.Map{"shopName": "This shop is already exist"})
+	}
+
+	// add shop
+	_, err = conn.Exec(
+		"INSERT INTO shops (shopName, shopImage, shopDescription, owner) VALUES ($1, '', $2, $3)",
+		shop.ShopName,
+		shop.ShopDescription,
+		username,
+	)
+
+	if err != nil {
+		return utils.ServerError(c, err)
+	}
+
+	return c.JSON(fiber.Map{"message": "success"})
 }
 
 // @Description rate a shop
