@@ -10,8 +10,8 @@ import (
 )
 
 type connection struct {
-	db       *sql.DB
-	isRuning bool
+	db        *sql.DB
+	isRunning bool
 }
 
 var connections [10]connection
@@ -34,13 +34,13 @@ func InitPostgresql() {
 		}
 
 		connections[i].db = db
-		connections[i].isRuning = false
+		connections[i].isRunning = false
 	}
 }
 
 func GetPool() *sql.DB {
 	for _, connection := range connections {
-		if !connection.isRuning {
+		if !connection.isRunning {
 			return connection.db
 		}
 	}
@@ -52,7 +52,7 @@ func GetPool() *sql.DB {
 func ClosePool(db *sql.DB) {
 	for _, connection := range connections {
 		if connection.db == db {
-			connection.isRuning = false
+			connection.isRunning = false
 			break
 		}
 	}

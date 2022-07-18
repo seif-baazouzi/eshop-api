@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"gitlab.com/seif-projects/e-shop/api/src/db"
 	"gitlab.com/seif-projects/e-shop/api/src/routes"
 
@@ -16,6 +18,8 @@ func main() {
 	app.Use(logger.New(logger.Config{
 		Format: "[${ip}]:${port} ${status} - ${method} ${path}\n",
 	}))
+
+	app.Static("/images", os.Getenv("UPLOADING_DIRECTORY"))
 
 	db.InitPostgresql()
 	defer db.ClosePostgresql()
