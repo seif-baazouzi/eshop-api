@@ -8,5 +8,6 @@ import (
 
 func SetupShopsRoutes(app *fiber.App) {
 	app.Get("/shops", handlers.GetAllShops)
+	app.Get("/shops/user", auth.IsUser, handlers.GetUserShops)
 	app.Put("/shops/:shopName/rate", auth.IsUser, handlers.ShopRate)
 }
