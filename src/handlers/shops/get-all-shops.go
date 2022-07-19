@@ -10,6 +10,8 @@ import (
 	"gitlab.com/seif-projects/e-shop/api/src/utils"
 )
 
+const MIN_SHOPS_COUNT_FOR_CACHING = 1000
+
 // @Description get all shops list
 // @Success 200 {array} Shop
 // @router /shops [get]
@@ -63,7 +65,9 @@ func GetAllShops(c *fiber.Ctx) error {
 		return utils.ServerError(c, err)
 	}
 
-	redisClient.Do("SET", "shopsList", jsonResult, "EX", "60")
+	if len(shopsList) > MIN_SHOPS_COUNT_FOR_CACHING {
+		redisClient.Do("SET", "shopsList", jsonResult, "EX", "60")
+	}
 
 	return c.JSON(fiber.Map{"shops": shopsList})
 }

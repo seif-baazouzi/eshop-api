@@ -9,7 +9,7 @@ import (
 	"gitlab.com/seif-projects/e-shop/api/src/models"
 )
 
-const MIX_USER_RATE_COUNT_FOR_CACHING = 1000
+const MIN_USER_RATE_COUNT_FOR_CACHING = 1000
 
 func GetShopsRating(conn *sql.DB, redisClient redis.Conn, shopsList []models.Shop) error {
 	for index := range shopsList {
@@ -54,7 +54,7 @@ func GetShopsRating(conn *sql.DB, redisClient redis.Conn, shopsList []models.Sho
 
 			shopsList[index].ShopRate = rate
 
-			if count > MIX_USER_RATE_COUNT_FOR_CACHING {
+			if count > MIN_USER_RATE_COUNT_FOR_CACHING {
 				redisClient.Do("SET", shopRateKey, rate, "EX", "60")
 			}
 		}
