@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"gitlab.com/seif-projects/e-shop/api/src/handlers"
+	handlers "gitlab.com/seif-projects/e-shop/api/src/handlers/auth"
 )
 
 func SetupAuthRoutes(app *fiber.App) {
