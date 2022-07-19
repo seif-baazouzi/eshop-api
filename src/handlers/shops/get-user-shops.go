@@ -34,27 +34,10 @@ func GetUserShops(c *fiber.Ctx) error {
 	}
 
 	// get shops rates
-	for index := range shopsList {
-		rows, err = conn.Query(
-			"SELECT sum(rate) as sum, count(*) as count FROM shops S, shopsRates R WHERE S.shopName = R.shopName AND R.shopName = $1",
-			shopsList[index].ShopName,
-		)
+	err = utils.GetShopsRating(conn, shopsList)
 
-		if err != nil {
-			return utils.ServerError(c, err)
-		}
-
-		if rows.Next() {
-			var sum uint64
-			var count uint64
-			rows.Scan(&sum, &count)
-
-			if count == 0 {
-				shopsList[index].ShopRate = 0
-			} else {
-				shopsList[index].ShopRate = sum / count
-			}
-		}
+	if err != nil {
+		return utils.ServerError(c, err)
 	}
 
 	return c.JSON(fiber.Map{"shops": shopsList})
