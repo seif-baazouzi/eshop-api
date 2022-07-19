@@ -15,7 +15,6 @@ func EditShop(c *fiber.Ctx) error {
 	conn := db.GetPool()
 	defer db.ClosePool(conn)
 
-	username := c.Locals("username")
 	shopName := c.Params("shopName")
 
 	// check shop
@@ -47,11 +46,10 @@ func EditShop(c *fiber.Ctx) error {
 
 	// edit shop
 	_, err = conn.Exec(
-		"UPDATE shops set shopName = $1, shopDescription = $2 WHERE shopName = $3 AND owner = $4",
+		"UPDATE shops set shopName = $1, shopDescription = $2 WHERE shopName = $3",
 		shop.ShopName,
 		shop.ShopDescription,
 		shopName,
-		username,
 	)
 
 	if err != nil {

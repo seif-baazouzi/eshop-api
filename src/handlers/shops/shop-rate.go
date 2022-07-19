@@ -7,30 +7,6 @@ import (
 	"gitlab.com/seif-projects/e-shop/api/src/utils"
 )
 
-// @Description edit a shop
-// @Success 200 {object} message
-// @router /shops/:shopName [delete]
-func DeleteShop(c *fiber.Ctx) error {
-	conn := db.GetPool()
-	defer db.ClosePool(conn)
-
-	username := c.Locals("username")
-	shopName := c.Params("shopName")
-
-	// delete shop
-	_, err := conn.Exec(
-		"DELETE FROM shops WHERE shopName = $1 AND owner = $2",
-		shopName,
-		username,
-	)
-
-	if err != nil {
-		return utils.ServerError(c, err)
-	}
-
-	return c.JSON(fiber.Map{"message": "success"})
-}
-
 // @Description rate a shop
 // @Success 200 {object} message
 // @router /shops/:shopName/rate [patch]
