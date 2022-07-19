@@ -31,16 +31,13 @@ func AddShop(c *fiber.Ctx) error {
 	}
 
 	// check if shop is already exist
-	rows, err := conn.Query(
-		"SELECT 1 FROM shops WHERE shopName = $1",
-		shop.ShopName,
-	)
+	isExist, err := tests.IsShopExists(conn, shop.ShopName)
 
 	if err != nil {
 		return utils.ServerError(c, err)
 	}
 
-	if rows.Next() {
+	if isExist {
 		return c.JSON(fiber.Map{"shopName": "This shop is already exist"})
 	}
 
