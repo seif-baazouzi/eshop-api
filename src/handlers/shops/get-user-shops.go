@@ -14,6 +14,9 @@ func GetUserShops(c *fiber.Ctx) error {
 	conn := db.GetPool()
 	defer db.ClosePool(conn)
 
+	redisClient := db.Redis.Get()
+	defer redisClient.Close()
+
 	username := c.Locals("username")
 
 	// get shops list from database
@@ -34,7 +37,7 @@ func GetUserShops(c *fiber.Ctx) error {
 	}
 
 	// get shops rates
-	err = utils.GetShopsRating(conn, shopsList)
+	err = utils.GetShopsRating(conn, redisClient, shopsList)
 
 	if err != nil {
 		return utils.ServerError(c, err)

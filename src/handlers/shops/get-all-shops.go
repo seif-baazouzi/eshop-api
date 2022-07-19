@@ -50,7 +50,7 @@ func GetAllShops(c *fiber.Ctx) error {
 	}
 
 	// get shops rates
-	err = utils.GetShopsRating(conn, shopsList)
+	err = utils.GetShopsRating(conn, redisClient, shopsList)
 
 	if err != nil {
 		return utils.ServerError(c, err)
