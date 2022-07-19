@@ -2,10 +2,8 @@ package handlers
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
 	"gitlab.com/seif-projects/e-shop/api/src/db"
 	"gitlab.com/seif-projects/e-shop/api/src/utils"
 )
@@ -18,14 +16,10 @@ func EditShopImage(c *fiber.Ctx) error {
 	defer db.ClosePool(conn)
 
 	shopName := c.Params("shopName")
-	oldImageName := c.Locals("shopImage")
+	oldImageName := fmt.Sprint(c.Locals("shopImage"))
 
 	// upload image
-	uploadingDir := os.Getenv("UPLOADING_DIRECTORY")
-
-	if oldImageName != "" {
-		os.Remove(fmt.Sprintf("%s/%s", uploadingDir, oldImageName))
-	}
+	utils.RemoveImage(oldImageName)
 
 	image, err := c.FormFile("image")
 
@@ -33,9 +27,7 @@ func EditShopImage(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{"message": "Invalid Image"})
 	}
 
-	imageName := uuid.New().String() + ".png"
-
-	err = c.SaveFile(image, fmt.Sprintf("%s/%s", uploadingDir, oldImageName))
+	imageName, err := utils.UploadImage(c, image)
 
 	if err != nil {
 		fmt.Println(err)
