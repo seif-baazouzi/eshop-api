@@ -11,7 +11,7 @@ import (
 	"gitlab.com/seif-projects/e-shop/api/src/utils"
 )
 
-// @Description get all items list
+// @Description get shop items list
 // @Success 200 {array} Item
 // @router /items/:shopName [get]
 func GetShopItems(c *fiber.Ctx) error {
@@ -44,7 +44,7 @@ func GetShopItems(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{"shopsList": result})
 	}
 
-	// get shops list from database
+	// get items list from database
 	rows, err := conn.Query(
 		"SELECT itemID, itemName, itemImage, itemPrice, itemDescription, itemDate, shop FROM items WHERE shop = $1",
 		shopName,

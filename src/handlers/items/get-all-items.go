@@ -37,7 +37,7 @@ func GetAllItems(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{"shopsList": result})
 	}
 
-	// get shops list from database
+	// get items list from database
 	rows, err := conn.Query("SELECT itemID, itemName, itemImage, itemPrice, itemDescription, itemDate, shop FROM items")
 
 	if err != nil {
