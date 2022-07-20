@@ -11,6 +11,8 @@ func SetupShopsRoutes(app *fiber.App) {
 
 	app.Get("/shops/user", auth.IsUser, handlers.GetUserShops)
 
+	app.Get("/shops/:shopName", handlers.GetSingleShop)
+
 	app.Post("/shops", auth.IsUser, handlers.AddShop)
 
 	app.Put("/shops/:shopName", auth.IsUser, auth.CheckShopItemOwner, handlers.EditShop)

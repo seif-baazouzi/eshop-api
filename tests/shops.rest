@@ -7,6 +7,11 @@ X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ
 
 ###
 
+GET http://127.0.0.1:3000/shops/test
+X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ.OntVj6u8x_LkKSS_R76aE03-SgTxmEBcMGng3TivPiA
+
+###
+
 POST  http://127.0.0.1:3000/shops
 X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ.OntVj6u8x_LkKSS_R76aE03-SgTxmEBcMGng3TivPiA
 Content-Type: application/json
@@ -39,5 +44,5 @@ X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ
 Content-Type: application/json
 
 {
-  "rate": 4
+  "rate": 5
 }
