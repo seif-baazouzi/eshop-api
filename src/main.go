@@ -29,6 +29,7 @@ func main() {
 
 	routes.SetupAuthRoutes(app)
 	routes.SetupShopsRoutes(app)
+	routes.SetupItemsRoutes(app)
 
 	app.Listen(":3000")
 }
