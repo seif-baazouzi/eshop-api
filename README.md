@@ -25,3 +25,8 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 - PATCH   /shops/:shopName  { image }
 - DELETE  /shops/:shopName
 - PUT     /shops/:shopName/rate { rate }
+
+## Items Routes
+
+- GET     /items
+- GET     /items/:shopName

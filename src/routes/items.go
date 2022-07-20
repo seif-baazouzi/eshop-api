@@ -7,4 +7,6 @@ import (
 
 func SetupItemsRoutes(app *fiber.App) {
 	app.Get("/items", handlers.GetAllItems)
+
+	app.Get("/items/:shopName", handlers.GetShopItems)
 }
