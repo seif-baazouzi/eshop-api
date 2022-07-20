@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"net/url"
+
 	"github.com/gofiber/fiber/v2"
 	"gitlab.com/seif-projects/e-shop/api/src/db"
 	"gitlab.com/seif-projects/e-shop/api/src/models"
@@ -17,7 +19,11 @@ func GetSingleShop(c *fiber.Ctx) error {
 	redisClient := db.Redis.Get()
 	defer redisClient.Close()
 
-	shopName := c.Params("shopName")
+	shopName, err := url.QueryUnescape(c.Params("shopName"))
+
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})
+	}
 
 	// get shop list from database
 	rows, err := conn.Query(

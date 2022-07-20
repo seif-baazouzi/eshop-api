@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"net/url"
+
 	"github.com/gofiber/fiber/v2"
 	"gitlab.com/seif-projects/e-shop/api/src/db"
 	"gitlab.com/seif-projects/e-shop/api/src/models"
@@ -14,12 +16,17 @@ func ShopRate(c *fiber.Ctx) error {
 	conn := db.GetPool()
 	defer db.ClosePool(conn)
 
-	shopName := c.Params("shopName")
+	shopName, err := url.QueryUnescape(c.Params("shopName"))
+
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})
+	}
+
 	username := c.Locals("username")
 
 	// check rate
 	var rate models.Rate
-	err := c.BodyParser(&rate)
+	err = c.BodyParser(&rate)
 
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})

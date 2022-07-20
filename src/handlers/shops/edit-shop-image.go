@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"net/url"
 
 	"github.com/gofiber/fiber/v2"
 	"gitlab.com/seif-projects/e-shop/api/src/db"
@@ -15,7 +16,12 @@ func EditShopImage(c *fiber.Ctx) error {
 	conn := db.GetPool()
 	defer db.ClosePool(conn)
 
-	shopName := c.Params("shopName")
+	shopName, err := url.QueryUnescape(c.Params("shopName"))
+
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})
+	}
+
 	oldImageName := fmt.Sprint(c.Locals("shopImage"))
 
 	// upload image
