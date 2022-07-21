@@ -20,4 +20,6 @@ func SetupItemsRoutes(app *fiber.App) {
 	app.Patch("/items/:itemID", auth.IsUser, auth.CheckItemOwner, handlers.EditItemImage)
 
 	app.Delete("/items/:itemID", auth.IsUser, auth.CheckItemOwner, handlers.DeleteItem)
+
+	app.Put("/items/:itemID/rate", auth.IsUser, handlers.ItemRate)
 }

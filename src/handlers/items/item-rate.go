@@ -9,14 +9,14 @@ import (
 	"gitlab.com/seif-projects/e-shop/api/src/utils"
 )
 
-// @Description rate a shop
+// @Description rate an item
 // @Success 200 {object} message
-// @router /shops/:shopName/rate [put]
-func ShopRate(c *fiber.Ctx) error {
+// @router /items/:itemID/rate [put]
+func ItemRate(c *fiber.Ctx) error {
 	conn := db.GetPool()
 	defer db.ClosePool(conn)
 
-	shopName, err := url.QueryUnescape(c.Params("shopName"))
+	itemID, err := url.QueryUnescape(c.Params("itemID"))
 
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})
@@ -38,7 +38,7 @@ func ShopRate(c *fiber.Ctx) error {
 
 	// set rate
 	rows, err := conn.Query(
-		"SELECT 1 FROM shopsRates WHERE username = $1",
+		"SELECT 1 FROM itemsRates WHERE username = $1",
 		username,
 	)
 
@@ -48,7 +48,7 @@ func ShopRate(c *fiber.Ctx) error {
 
 	if rows.Next() {
 		_, err := conn.Exec(
-			"UPDATE shopsRates SET rate = $1 WHERE username = $2",
+			"UPDATE itemsRates SET rate = $1 WHERE username = $2",
 			rate.RateValue,
 			username,
 		)
@@ -58,8 +58,8 @@ func ShopRate(c *fiber.Ctx) error {
 		}
 	} else {
 		_, err := conn.Exec(
-			"INSERT INTO shopsRates VALUES ($1, $2, $3)",
-			shopName,
+			"INSERT INTO itemsRates VALUES ($1, $2, $3)",
+			itemID,
 			username,
 			rate.RateValue,
 		)
