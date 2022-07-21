@@ -32,3 +32,8 @@ Content-Type: application/json
   "itemDescription": "This is a description"
 }
 
+###
+
+DELETE http://127.0.0.1:3000/items/1
+X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ.OntVj6u8x_LkKSS_R76aE03-SgTxmEBcMGng3TivPiA
+

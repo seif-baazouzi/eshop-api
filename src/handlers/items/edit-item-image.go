@@ -11,7 +11,7 @@ import (
 
 // @Description edit item image
 // @Success 200 {object} message
-// @router /items/:shopName [patch]
+// @router /items/:itemID [patch]
 func EditItemImage(c *fiber.Ctx) error {
 	conn := db.GetPool()
 	defer db.ClosePool(conn)
@@ -40,7 +40,7 @@ func EditItemImage(c *fiber.Ctx) error {
 		return c.JSON(fiber.Map{"message": "Can not upload image"})
 	}
 
-	// edit shop image
+	// edit item image
 	_, err = conn.Exec(
 		"UPDATE items SET itemImage = $1 WHERE itemID = $2",
 		imageName,

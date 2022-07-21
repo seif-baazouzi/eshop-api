@@ -8,14 +8,14 @@ import (
 	"gitlab.com/seif-projects/e-shop/api/src/utils"
 )
 
-// @Description delete shop
+// @Description delete item
 // @Success 200 {object} message
-// @router /shops/:shopName [delete]
-func DeleteShop(c *fiber.Ctx) error {
+// @router /items/:itemID [delete]
+func DeleteItem(c *fiber.Ctx) error {
 	conn := db.GetPool()
 	defer db.ClosePool(conn)
 
-	shopName, err := url.QueryUnescape(c.Params("shopName"))
+	itemID, err := url.QueryUnescape(c.Params("itemID"))
 
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})
@@ -23,8 +23,8 @@ func DeleteShop(c *fiber.Ctx) error {
 
 	// delete shop
 	_, err = conn.Exec(
-		"DELETE FROM shops WHERE shopName = $1",
-		shopName,
+		"DELETE FROM items WHERE itemID = $1",
+		itemID,
 	)
 
 	if err != nil {

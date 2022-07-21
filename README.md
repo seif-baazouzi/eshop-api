@@ -34,3 +34,4 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 - POST    /items/:shopName  { itemName, itemDescription, itemPrice }
 - PUT     /items/:itemID    { itemName, itemDescription, itemPrice }
 - PATCH   /items/:itemID    { image }
+- DELETE  /items/:itemID
