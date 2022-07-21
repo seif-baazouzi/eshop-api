@@ -15,7 +15,7 @@ X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ
 Content-Type: application/json
 
 {
-  "itemName": "test",
+  "itemName": "test123",
   "itemPrice": 12,
   "itemDescription": "This is a description"
 }

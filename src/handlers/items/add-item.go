@@ -37,7 +37,7 @@ func AddItem(c *fiber.Ctx) error {
 	}
 
 	// check if item is already exist
-	isExist, err := tests.IsItemExists(conn, item.ItemImage, shopName)
+	isExist, err := tests.IsItemExists(conn, item.ItemName, shopName)
 
 	if err != nil {
 		return utils.ServerError(c, err)
