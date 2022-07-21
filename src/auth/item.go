@@ -8,21 +8,21 @@ import (
 	"gitlab.com/seif-projects/e-shop/api/src/utils"
 )
 
-func CheckShopOwner(c *fiber.Ctx) error {
+func CheckItemOwner(c *fiber.Ctx) error {
 	conn := db.GetPool()
 	defer db.ClosePool(conn)
 
 	username := c.Locals("username")
-	shopName, err := url.QueryUnescape(c.Params("shopName"))
+	itemID, err := url.QueryUnescape(c.Params("itemID"))
 
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})
 	}
 
 	rows, err := conn.Query(
-		"SELECT shopImage FROM shops WHERE shopName = $1 AND owner = $2",
-		shopName,
+		"SELECT shopName FROM shops S, items I WHERE S.owner = $1 AND I.itemID = $2 AND I.shop = S.shopName",
 		username,
+		itemID,
 	)
 
 	if err != nil {
@@ -30,13 +30,13 @@ func CheckShopOwner(c *fiber.Ctx) error {
 	}
 
 	if !rows.Next() {
-		return c.JSON(fiber.Map{"message": "user-not-exist"})
+		return c.JSON(fiber.Map{"message": "item-not-exist"})
 	}
 
-	var shopImage string
-	rows.Scan(&shopImage)
+	var shopName string
+	rows.Scan(&shopName)
 
-	c.Locals("shopImage", shopImage)
+	c.Locals("shopName", shopName)
 
 	return c.Next()
 }

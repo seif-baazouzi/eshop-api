@@ -13,5 +13,7 @@ func SetupItemsRoutes(app *fiber.App) {
 
 	app.Get("/items/:itemID", handlers.GetSingleItems)
 
-	app.Post("/items/:shopName", auth.IsUser, auth.CheckShopItemOwner, handlers.AddItem)
+	app.Post("/items/:shopName", auth.IsUser, auth.CheckShopOwner, handlers.AddItem)
+
+	app.Put("/items/:itemID", auth.IsUser, auth.CheckItemOwner, handlers.EditItem)
 }

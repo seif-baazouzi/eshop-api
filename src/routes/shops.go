@@ -15,11 +15,11 @@ func SetupShopsRoutes(app *fiber.App) {
 
 	app.Post("/shops", auth.IsUser, handlers.AddShop)
 
-	app.Put("/shops/:shopName", auth.IsUser, auth.CheckShopItemOwner, handlers.EditShop)
+	app.Put("/shops/:shopName", auth.IsUser, auth.CheckShopOwner, handlers.EditShop)
 
-	app.Patch("/shops/:shopName", auth.IsUser, auth.CheckShopItemOwner, handlers.EditShopImage)
+	app.Patch("/shops/:shopName", auth.IsUser, auth.CheckShopOwner, handlers.EditShopImage)
 
-	app.Delete("/shops/:shopName", auth.IsUser, auth.CheckShopItemOwner, handlers.DeleteShop)
+	app.Delete("/shops/:shopName", auth.IsUser, auth.CheckShopOwner, handlers.DeleteShop)
 
 	app.Put("/shops/:shopName/rate", auth.IsUser, handlers.ShopRate)
 }
