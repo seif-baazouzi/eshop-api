@@ -22,7 +22,7 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 - GET     /shops/user
 - POST    /shops            { shopName, shopDescription }
 - PUT     /shops/:shopName  { shopName, shopDescription }
-- PATCH   /shops/:shopName  { shopImage }
+- PATCH   /shops/:shopName  { image }
 - DELETE  /shops/:shopName
 - PUT     /shops/:shopName/rate { rate }
 
@@ -32,3 +32,5 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 - GET     /items/shop/:shopName
 - GET     /items/:itemID
 - POST    /items/:shopName  { itemName, itemDescription, itemPrice }
+- PUT     /items/:itemID    { itemName, itemDescription, itemPrice }
+- PATCH   /items/:itemID    { image }

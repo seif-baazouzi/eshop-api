@@ -20,7 +20,7 @@ func CheckItemOwner(c *fiber.Ctx) error {
 	}
 
 	rows, err := conn.Query(
-		"SELECT shopName FROM shops S, items I WHERE S.owner = $1 AND I.itemID = $2 AND I.shop = S.shopName",
+		"SELECT shopName,itemImage FROM shops S, items I WHERE S.owner = $1 AND I.itemID = $2 AND I.shop = S.shopName",
 		username,
 		itemID,
 	)
@@ -34,9 +34,11 @@ func CheckItemOwner(c *fiber.Ctx) error {
 	}
 
 	var shopName string
-	rows.Scan(&shopName)
+	var itemImage string
+	rows.Scan(&shopName, &itemImage)
 
 	c.Locals("shopName", shopName)
+	c.Locals("itemImage", itemImage)
 
 	return c.Next()
 }

@@ -9,23 +9,23 @@ import (
 	"gitlab.com/seif-projects/e-shop/api/src/utils"
 )
 
-// @Description edit shop image
+// @Description edit item image
 // @Success 200 {object} message
-// @router /shops/:shopName [patch]
-func EditShopImage(c *fiber.Ctx) error {
+// @router /items/:shopName [patch]
+func EditItemImage(c *fiber.Ctx) error {
 	conn := db.GetPool()
 	defer db.ClosePool(conn)
 
-	shopName, err := url.QueryUnescape(c.Params("shopName"))
+	itemID, err := url.QueryUnescape(c.Params("itemID"))
 
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})
 	}
 
-	oldImageName := fmt.Sprint(c.Locals("shopImage"))
+	oldItemImage := fmt.Sprint(c.Locals("itemImage"))
 
 	// upload image
-	utils.RemoveImage(oldImageName)
+	utils.RemoveImage(oldItemImage)
 
 	image, err := c.FormFile("image")
 
@@ -42,9 +42,9 @@ func EditShopImage(c *fiber.Ctx) error {
 
 	// edit shop image
 	_, err = conn.Exec(
-		"UPDATE shops set shopImage = $1 WHERE shopName = $2",
+		"UPDATE items SET itemImage = $1 WHERE itemID = $2",
 		imageName,
-		shopName,
+		itemID,
 	)
 
 	if err != nil {
