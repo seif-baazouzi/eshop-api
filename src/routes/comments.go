@@ -10,4 +10,6 @@ func SetupCommentsRoutes(app *fiber.App) {
 	app.Get("/comments/:itemID", handlers.GetComments)
 
 	app.Post("/comments/:itemID", auth.IsUser, handlers.AddComments)
+
+	app.Put("/comments/:commentID", auth.IsUser, handlers.EditComments)
 }

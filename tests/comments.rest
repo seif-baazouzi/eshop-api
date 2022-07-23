@@ -9,3 +9,13 @@ Content-Type: application/json
 {
   "commentValue": "test"
 }
+
+###
+
+PUT http://127.0.0.1:3000/comments/1
+X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ.OntVj6u8x_LkKSS_R76aE03-SgTxmEBcMGng3TivPiA
+Content-Type: application/json
+
+{
+  "commentValue": "test124"
+}
