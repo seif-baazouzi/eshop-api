@@ -37,7 +37,7 @@ func EditComments(c *fiber.Ctx) error {
 		return c.JSON(errors)
 	}
 
-	// add comment
+	// edit comment
 	_, err = conn.Exec(
 		"UPDATE itemsComments SET commentValue = $1 WHERE commentID = $2 AND username = $3",
 		comment.CommentValue,

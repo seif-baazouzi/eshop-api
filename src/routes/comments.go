@@ -12,4 +12,6 @@ func SetupCommentsRoutes(app *fiber.App) {
 	app.Post("/comments/:itemID", auth.IsUser, handlers.AddComments)
 
 	app.Put("/comments/:commentID", auth.IsUser, handlers.EditComments)
+
+	app.Delete("/comments/:commentID", auth.IsUser, handlers.DeleteComments)
 }
