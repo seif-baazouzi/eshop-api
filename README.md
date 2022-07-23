@@ -36,3 +36,8 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 - PATCH   /items/:itemID    { image }
 - DELETE  /items/:itemID
 - PUT     /items/:itemID/rate { rate }
+
+## Comments Routes
+
+- GET     /comments/:itemID
+- POST    /comments/:itemID       { commentValue }
