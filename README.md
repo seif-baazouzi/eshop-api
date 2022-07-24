@@ -47,3 +47,4 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 ## Carts Routes
 
 - GET     /carts/:shopName
+- GET     /carts/items/:cartID
