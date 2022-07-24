@@ -43,3 +43,7 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 - POST    /comments/:itemID       { commentValue }
 - POST    /comments/:commentID    { commentValue }
 - DELETE  /comments/:commentID
+
+## Carts Routes
+
+- GET     /carts/:shopName
