@@ -1,4 +1,4 @@
-GET http://127.0.0.1:3000/carts/test
+GET http://127.0.0.1:3000/carts/shop/test
 X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ.OntVj6u8x_LkKSS_R76aE03-SgTxmEBcMGng3TivPiA
 
 ###
@@ -8,7 +8,12 @@ X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ
 
 ###
 
-GET http://127.0.0.1:3000/carts/items/1
+GET http://127.0.0.1:3000/carts/shop/items/6
+X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ.OntVj6u8x_LkKSS_R76aE03-SgTxmEBcMGng3TivPiA
+
+###
+
+GET http://127.0.0.1:3000/carts/user/items/6
 X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ.OntVj6u8x_LkKSS_R76aE03-SgTxmEBcMGng3TivPiA
 
 ###

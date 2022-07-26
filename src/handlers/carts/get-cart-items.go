@@ -35,7 +35,7 @@ func GetCartItems(c *fiber.Ctx) error {
 	itemsList := []models.CartItem{}
 	for rows.Next() {
 		var item models.CartItem
-		rows.Scan(&item.CartItemID, &item.Amount, &item.ItemImage, &item.ItemImage, &item.ItemPrice)
+		rows.Scan(&item.CartItemID, &item.Amount, &item.ItemName, &item.ItemImage, &item.ItemPrice)
 		itemsList = append(itemsList, item)
 	}
 
