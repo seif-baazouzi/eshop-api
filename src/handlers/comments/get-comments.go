@@ -32,6 +32,8 @@ func GetComments(c *fiber.Ctx) error {
 		return utils.ServerError(c, err)
 	}
 
+	defer rows.Close()
+
 	commentsList := []models.Comment{}
 	for rows.Next() {
 		var comment models.Comment

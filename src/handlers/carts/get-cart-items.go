@@ -32,6 +32,8 @@ func GetCartItems(c *fiber.Ctx) error {
 		return utils.ServerError(c, err)
 	}
 
+	defer rows.Close()
+
 	itemsList := []models.CartItem{}
 	for rows.Next() {
 		var item models.CartItem

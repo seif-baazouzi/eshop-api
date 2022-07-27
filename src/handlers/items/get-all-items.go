@@ -44,6 +44,8 @@ func GetAllItems(c *fiber.Ctx) error {
 		return utils.ServerError(c, err)
 	}
 
+	defer rows.Close()
+
 	itemsList := []models.Item{}
 	for rows.Next() {
 		var item models.Item

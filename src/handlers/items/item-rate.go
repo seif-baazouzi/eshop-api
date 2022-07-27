@@ -46,6 +46,8 @@ func ItemRate(c *fiber.Ctx) error {
 		return utils.ServerError(c, err)
 	}
 
+	defer rows.Close()
+
 	if rows.Next() {
 		_, err := conn.Exec(
 			"UPDATE itemsRates SET rate = $1 WHERE username = $2",

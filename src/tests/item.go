@@ -40,6 +40,8 @@ func IsItemExists(conn *sql.DB, itemName string, shopName string) (bool, error) 
 		return false, err
 	}
 
+	defer rows.Close()
+
 	if rows.Next() {
 		return true, nil
 	}

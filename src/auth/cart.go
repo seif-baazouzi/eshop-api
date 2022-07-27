@@ -29,6 +29,8 @@ func CheckCartShop(c *fiber.Ctx) error {
 		return utils.ServerError(c, err)
 	}
 
+	rows.Close()
+
 	if !rows.Next() {
 		return c.JSON(fiber.Map{"message": "cart-not-exist"})
 	}
@@ -56,6 +58,8 @@ func CheckCartOwner(c *fiber.Ctx) error {
 	if err != nil {
 		return utils.ServerError(c, err)
 	}
+
+	defer rows.Close()
 
 	if !rows.Next() {
 		return c.JSON(fiber.Map{"message": "cart-not-exist"})

@@ -37,6 +37,8 @@ func GetSingleShopRating(conn *sql.DB, redisClient redis.Conn, shopName string) 
 		return 0, err
 	}
 
+	defer rows.Close()
+
 	if rows.Next() {
 		var sum uint64
 		var count uint64

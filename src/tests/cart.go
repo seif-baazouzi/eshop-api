@@ -39,6 +39,8 @@ func CheckCart(conn *sql.DB, cart models.CartItemsList) (fiber.Map, error) {
 			return nil, err
 		}
 
+		defer res.Close()
+
 		if !res.Next() {
 			errors["shopName"] = "Shop does not exist"
 		}
@@ -60,6 +62,8 @@ func CheckCart(conn *sql.DB, cart models.CartItemsList) (fiber.Map, error) {
 			if err != nil {
 				return nil, err
 			}
+
+			defer res.Close()
 
 			if !res.Next() {
 				errors["items"] = fmt.Sprintf("Item with id %d does not exist", item.ItemID)

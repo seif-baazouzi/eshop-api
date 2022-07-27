@@ -34,6 +34,8 @@ func GetSingleItemRating(conn *sql.DB, redisClient redis.Conn, itemID uint) (uin
 		return 0, err
 	}
 
+	defer rows.Close()
+
 	if rows.Next() {
 		var sum uint64
 		var count uint64

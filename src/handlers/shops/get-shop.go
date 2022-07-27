@@ -35,6 +35,8 @@ func GetSingleShop(c *fiber.Ctx) error {
 		return utils.ServerError(c, err)
 	}
 
+	defer rows.Close()
+
 	if !rows.Next() {
 		return c.JSON(fiber.Map{"message": "Shop does not exist"})
 	}

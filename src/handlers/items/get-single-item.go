@@ -35,6 +35,8 @@ func GetSingleItems(c *fiber.Ctx) error {
 		return utils.ServerError(c, err)
 	}
 
+	defer rows.Close()
+
 	for !rows.Next() {
 		return c.JSON(fiber.Map{"message": "Item does not exist"})
 	}
