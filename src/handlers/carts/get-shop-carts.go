@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/url"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"gitlab.com/seif-projects/e-shop/api/src/db"
@@ -22,10 +23,28 @@ func GetShopCarts(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})
 	}
 
+	page, err := strconv.Atoi(c.Query("page", "1"))
+
+	if err != nil || page < 0 {
+		return utils.ServerError(c, err)
+	}
+
+	// get pages number
+	limit := 20
+	offset := limit * (page - 1)
+
+	row := conn.QueryRow("SELECT count(*) FROM carts WHERE shopName = $1", shopName)
+
+	var pages int
+	row.Scan(&pages)
+	pages = pages/limit + 1
+
 	// get carts list from database
 	rows, err := conn.Query(
-		"SELECT cartID, address, cartDate, shopName, username FROM carts WHERE shopName = $1",
+		"SELECT cartID, address, cartDate, shopName, username FROM carts WHERE shopName = $1 ORDER BY cartDate DESC LIMIT $2 OFFSET $3",
 		shopName,
+		limit,
+		offset,
 	)
 
 	if err != nil {
@@ -41,5 +60,5 @@ func GetShopCarts(c *fiber.Ctx) error {
 		cartsList = append(cartsList, cart)
 	}
 
-	return c.JSON(fiber.Map{"carts": cartsList})
+	return c.JSON(fiber.Map{"carts": cartsList, "pages": pages})
 }
