@@ -3,14 +3,13 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"gitlab.com/seif-projects/e-shop/api/src/db"
 	"gitlab.com/seif-projects/e-shop/api/src/models"
 	"gitlab.com/seif-projects/e-shop/api/src/utils"
 )
-
-const MIN_ITEMS_COUNT_FOR_CACHING = 1000
 
 // @Description get all items list
 // @Success 200 {array} Item
@@ -22,8 +21,16 @@ func GetAllItems(c *fiber.Ctx) error {
 	redisClient := db.Redis.Get()
 	defer redisClient.Close()
 
+	page, err := strconv.Atoi(c.Query("page", "1"))
+
+	if err != nil || page < 0 {
+		return utils.ServerError(c, err)
+	}
+
 	// check if the itemsList is cached
-	res, err := redisClient.Do("GET", "itemsList")
+	itemListPageKey := fmt.Sprintf("itemsList-%d", page)
+
+	res, err := redisClient.Do("GET", itemListPageKey)
 
 	if err != nil {
 		return utils.ServerError(c, err)
@@ -34,11 +41,25 @@ func GetAllItems(c *fiber.Ctx) error {
 		resStr := fmt.Sprintf("%s", res)
 		json.Unmarshal([]byte(resStr), &result)
 
-		return c.JSON(fiber.Map{"shopsList": result})
+		return c.JSON(result)
 	}
 
+	// get pages number
+	limit := 20
+	offset := limit * (page - 1)
+
+	row := conn.QueryRow("SELECT count(*) FROM items")
+
+	var pages int
+	row.Scan(&pages)
+	pages = pages/limit + 1
+
 	// get items list from database
-	rows, err := conn.Query("SELECT itemID, itemName, itemImage, itemPrice, itemDescription, itemDate, shop FROM items")
+	rows, err := conn.Query(
+		"SELECT itemID, itemName, itemImage, itemPrice, itemDescription, itemDate, shop FROM items ORDER BY itemDate DESC LIMIT $1 OFFSET $2",
+		limit,
+		offset,
+	)
 
 	if err != nil {
 		return utils.ServerError(c, err)
@@ -65,15 +86,15 @@ func GetAllItems(c *fiber.Ctx) error {
 	}
 
 	// cache the result
-	jsonResult, err := json.Marshal(itemsList)
+	jsonResult, err := json.Marshal(fiber.Map{"items": itemsList, "pages": pages})
 
 	if err != nil {
 		return utils.ServerError(c, err)
 	}
 
-	if len(itemsList) > MIN_ITEMS_COUNT_FOR_CACHING {
-		redisClient.Do("SET", "itemsList", jsonResult, "EX", "60")
+	if len(itemsList) != 0 {
+		redisClient.Do("SET", itemListPageKey, jsonResult, "EX", "60")
 	}
 
-	return c.JSON(fiber.Map{"items": itemsList})
+	return c.JSON(fiber.Map{"items": itemsList, "pages": pages})
 }

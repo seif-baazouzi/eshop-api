@@ -18,8 +18,8 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 
 ## Shop Routes
 
-- GET     /shops
-- GET     /shops/user
+- GET     /shops?page=pageNumber
+- GET     /shops/user?page=pageNumber
 - POST    /shops            { shopName, shopDescription }
 - PUT     /shops/:shopName  { shopName, shopDescription }
 - PATCH   /shops/:shopName  { image }
@@ -28,8 +28,8 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 
 ## Items Routes
 
-- GET     /items
-- GET     /items/shop/:shopName
+- GET     /items?page=pageNumber
+- GET     /items/shop/:shopName?page=pageNumber
 - GET     /items/:itemID
 - POST    /items/:shopName  { itemName, itemDescription, itemPrice }
 - PUT     /items/:itemID    { itemName, itemDescription, itemPrice }

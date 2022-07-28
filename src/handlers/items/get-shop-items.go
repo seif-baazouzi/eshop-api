@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"gitlab.com/seif-projects/e-shop/api/src/db"
@@ -27,7 +28,13 @@ func GetShopItems(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})
 	}
 
-	shopItemsKey := shopName + "ItemsList"
+	page, err := strconv.Atoi(c.Query("page", "1"))
+
+	if err != nil || page < 0 {
+		return utils.ServerError(c, err)
+	}
+
+	shopItemsKey := fmt.Sprintf("%s-ItemsList-%d", shopName, page)
 
 	// check if the itemsList is cached
 	res, err := redisClient.Do("GET", shopItemsKey)
@@ -41,13 +48,25 @@ func GetShopItems(c *fiber.Ctx) error {
 		resStr := fmt.Sprintf("%s", res)
 		json.Unmarshal([]byte(resStr), &result)
 
-		return c.JSON(fiber.Map{"shopsList": result})
+		return c.JSON(result)
 	}
+
+	// get pages number
+	limit := 20
+	offset := limit * (page - 1)
+
+	row := conn.QueryRow("SELECT count(*) FROM items WHERE shop = $1", shopName)
+
+	var pages int
+	row.Scan(&pages)
+	pages = pages/limit + 1
 
 	// get items list from database
 	rows, err := conn.Query(
-		"SELECT itemID, itemName, itemImage, itemPrice, itemDescription, itemDate, shop FROM items WHERE shop = $1",
+		"SELECT itemID, itemName, itemImage, itemPrice, itemDescription, itemDate, shop FROM items WHERE shop = $1 ORDER BY itemDate DESC LIMIT $2 OFFSET $3",
 		shopName,
+		limit,
+		offset,
 	)
 
 	if err != nil {
@@ -75,15 +94,15 @@ func GetShopItems(c *fiber.Ctx) error {
 	}
 
 	// cache the result
-	jsonResult, err := json.Marshal(itemsList)
+	jsonResult, err := json.Marshal(fiber.Map{"items": itemsList, "pages": pages})
 
 	if err != nil {
 		return utils.ServerError(c, err)
 	}
 
-	if len(itemsList) > MIN_ITEMS_COUNT_FOR_CACHING {
+	if len(itemsList) != 0 {
 		redisClient.Do("SET", shopItemsKey, jsonResult, "EX", "60")
 	}
 
-	return c.JSON(fiber.Map{"items": itemsList})
+	return c.JSON(fiber.Map{"items": itemsList, "pages": pages})
 }
