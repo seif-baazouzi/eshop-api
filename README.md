@@ -39,15 +39,15 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 
 ## Comments Routes
 
-- GET     /comments/:itemID
+- GET     /comments/:itemID?page=pageNumber
 - POST    /comments/:itemID       { commentValue }
 - POST    /comments/:commentID    { commentValue }
 - DELETE  /comments/:commentID
 
 ## Carts Routes
 
-- GET     /carts/shop/:shopName
-- GET     /carts/user
+- GET     /carts/shop/:shopName?page=pageNumber
+- GET     /carts/user?page=pageNumber
 - GET     /carts/shop/items/:cartID
 - GET     /carts/user/items/:cartID
 - POST    /carts  { address, shopName, items }

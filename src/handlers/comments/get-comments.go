@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/url"
+	"strconv"
 
 	"github.com/gofiber/fiber/v2"
 	"gitlab.com/seif-projects/e-shop/api/src/db"
@@ -22,10 +23,21 @@ func GetComments(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})
 	}
 
+	page, err := strconv.Atoi(c.Query("page", "1"))
+
+	if err != nil || page < 0 {
+		return utils.ServerError(c, err)
+	}
+
 	// get comments list from database
+	limit := 20
+	offset := limit * (page - 1)
+
 	rows, err := conn.Query(
-		"SELECT commentID, commentValue, commentDate, username FROM itemsComments WHERE itemID = $1",
+		"SELECT commentID, commentValue, commentDate, username FROM itemsComments WHERE itemID = $1 ORDER BY commentDate DESC LIMIT $2 OFFSET $3",
 		itemID,
+		limit,
+		offset,
 	)
 
 	if err != nil {
