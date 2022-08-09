@@ -15,11 +15,13 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 
 - POST    /login    { email, password }
 - POST    /signup   { email, username, password }
+- GET     /username
 
 ## Shop Routes
 
 - GET     /shops?page=pageNumber
 - GET     /shops/user?page=pageNumber
+- GET     /shops/:shopName
 - POST    /shops            { shopName, shopDescription }
 - PUT     /shops/:shopName  { shopName, shopDescription }
 - PATCH   /shops/:shopName  { image }
