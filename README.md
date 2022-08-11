@@ -22,6 +22,7 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 - GET     /shops?page=pageNumber
 - GET     /shops/user?page=pageNumber
 - GET     /shops/:shopName
+- GET     /shops/user/rate/:shopName
 - POST    /shops            { shopName, shopDescription }
 - PUT     /shops/:shopName  { shopName, shopDescription }
 - PATCH   /shops/:shopName  { image }
