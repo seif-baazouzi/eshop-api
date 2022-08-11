@@ -34,6 +34,7 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 - GET     /items?page=pageNumber
 - GET     /items/shop/:shopName?page=pageNumber
 - GET     /items/:itemID
+- GET     /items/user/rate/:itemID
 - POST    /items/:shopName  { itemName, itemDescription, itemPrice }
 - PUT     /items/:itemID    { itemName, itemDescription, itemPrice }
 - PATCH   /items/:itemID    { image }
