@@ -43,7 +43,7 @@ func EditShop(c *fiber.Ctx) error {
 		return utils.ServerError(c, err)
 	}
 
-	if isExist {
+	if isExist && shop.ShopName != shopName {
 		return c.JSON(fiber.Map{"shopName": "This shop is already exist"})
 	}
 
