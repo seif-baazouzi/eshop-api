@@ -29,7 +29,7 @@ func CheckCartShop(c *fiber.Ctx) error {
 		return utils.ServerError(c, err)
 	}
 
-	rows.Close()
+	defer rows.Close()
 
 	if !rows.Next() {
 		return c.JSON(fiber.Map{"message": "cart-not-exist"})
