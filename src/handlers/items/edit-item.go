@@ -19,6 +19,8 @@ func EditItem(c *fiber.Ctx) error {
 	defer db.ClosePool(conn)
 
 	shopName := fmt.Sprintf("%s", c.Locals("shopName"))
+	itemName := fmt.Sprintf("%s", c.Locals("itemName"))
+
 	itemID, err := url.QueryUnescape(c.Params("itemID"))
 
 	if err != nil {
@@ -45,7 +47,7 @@ func EditItem(c *fiber.Ctx) error {
 		return utils.ServerError(c, err)
 	}
 
-	if isExist {
+	if isExist && item.ItemName != itemName {
 		return c.JSON(fiber.Map{"itemName": "This item is already exist"})
 	}
 
