@@ -38,8 +38,9 @@ func ItemRate(c *fiber.Ctx) error {
 
 	// set rate
 	rows, err := conn.Query(
-		"SELECT 1 FROM itemsRates WHERE username = $1",
+		"SELECT 1 FROM itemsRates WHERE username = $1 AND itemID = $2",
 		username,
+		itemID,
 	)
 
 	if err != nil {
