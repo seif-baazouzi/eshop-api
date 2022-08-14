@@ -38,8 +38,9 @@ func ShopRate(c *fiber.Ctx) error {
 
 	// set rate
 	rows, err := conn.Query(
-		"SELECT 1 FROM shopsRates WHERE username = $1",
+		"SELECT 1 FROM shopsRates WHERE username = $1 AND shopName = $2",
 		username,
+		shopName,
 	)
 
 	if err != nil {
