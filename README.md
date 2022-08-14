@@ -9,6 +9,20 @@ This is a rest api for e-shop stores, were the user can create his own shops and
 - Postgresql
 - Redis
 
+# Quick Start
+
+```console
+$ export DB_USER=postgres
+$ export DB_PASSWORD=password
+$ export DB_HOST=127.0.0.1
+$ export DB_NAME=eshop
+$ export REDIS_HOSTNAME=127.0.0.1
+$ export JWT_SECRET=JWT_SECRET
+$ export UPLOADING_DIRECTORY='/path/to/uploading/directory'
+
+$ go run ./src/main.go
+```
+
 # Routes
 
 ## Auth routes
