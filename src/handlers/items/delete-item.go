@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/url"
 
 	"github.com/gofiber/fiber/v2"
@@ -20,6 +21,11 @@ func DeleteItem(c *fiber.Ctx) error {
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{"message": "invalid-input"})
 	}
+
+	// remove item image
+	oldImageName := fmt.Sprint(c.Locals("itemImage"))
+	fmt.Println(oldImageName)
+	utils.RemoveImage(oldImageName)
 
 	// delete shop
 	_, err = conn.Exec(

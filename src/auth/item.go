@@ -38,7 +38,7 @@ func CheckItemOwner(c *fiber.Ctx) error {
 	var shopName string
 	var itemName string
 	var itemImage string
-	rows.Scan(&shopName, &itemImage)
+	rows.Scan(&shopName, &itemImage, &itemName)
 
 	c.Locals("shopName", shopName)
 	c.Locals("itemName", itemName)
