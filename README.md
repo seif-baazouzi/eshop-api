@@ -69,3 +69,4 @@ $ go run ./src/main.go
 - GET     /carts/shop/items/:cartID
 - GET     /carts/user/items/:cartID
 - POST    /carts  { address, shopName, items }
+- PUT     /carts/:cartID/:status
