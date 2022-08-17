@@ -12,7 +12,10 @@ func SetupCartsRoutes(app *fiber.App) {
 	app.Get("/carts/shop/:shopName", auth.IsUser, auth.CheckShopOwner, handlers.GetShopCarts)
 
 	app.Get("/carts/shop/items/:cartID", auth.IsUser, auth.CheckCartShop, handlers.GetCartItems)
+
 	app.Get("/carts/user/items/:cartID", auth.IsUser, auth.CheckCartOwner, handlers.GetCartItems)
 
 	app.Post("/carts", auth.IsUser, handlers.AddCart)
+
+	app.Put("/carts/:cartID/:status", auth.IsUser, auth.CheckCartShop, handlers.SetViewedStatus)
 }

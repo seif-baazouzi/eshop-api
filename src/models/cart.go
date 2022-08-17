@@ -8,4 +8,5 @@ type Cart struct {
 	CartDate time.Time `json:"cartDate"`
 	ShopName string    `json:"shopName"`
 	Username string    `json:"username"`
+	Viewed   bool      `json:"viewed"`
 }

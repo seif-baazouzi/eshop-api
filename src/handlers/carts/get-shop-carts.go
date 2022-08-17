@@ -41,7 +41,7 @@ func GetShopCarts(c *fiber.Ctx) error {
 
 	// get carts list from database
 	rows, err := conn.Query(
-		"SELECT cartID, address, cartDate, shopName, username FROM carts WHERE shopName = $1 ORDER BY cartDate DESC LIMIT $2 OFFSET $3",
+		"SELECT cartID, address, cartDate, shopName, username, viewed FROM carts WHERE shopName = $1 ORDER BY cartDate DESC LIMIT $2 OFFSET $3",
 		shopName,
 		limit,
 		offset,
@@ -56,7 +56,7 @@ func GetShopCarts(c *fiber.Ctx) error {
 	cartsList := []models.Cart{}
 	for rows.Next() {
 		var cart models.Cart
-		rows.Scan(&cart.CartID, &cart.Address, &cart.CartDate, &cart.ShopName, &cart.Username)
+		rows.Scan(&cart.CartID, &cart.Address, &cart.CartDate, &cart.ShopName, &cart.Username, &cart.Viewed)
 		cartsList = append(cartsList, cart)
 	}
 
