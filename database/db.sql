@@ -63,6 +63,7 @@ CREATE TABLE carts (
   cartDate DATE NOT NULL default CURRENT_TIMESTAMP,
   shopName VARCHAR NOT NULL,
   username VARCHAR NOT NULL,
+  viewed boolean NOT NULL default FALSE,
   CONSTRAINT shop_cart FOREIGN KEY (shopName) REFERENCES shops(shopName) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT user_cart FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
 );
