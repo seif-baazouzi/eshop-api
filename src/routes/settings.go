@@ -10,4 +10,6 @@ func SetupSettingsRoutes(app *fiber.App) {
 	app.Post("/users/settings/update-password", auth.IsUser, handlers.UpdatePassword)
 
 	app.Post("/users/settings/update-username", auth.IsUser, handlers.UpdateUsername)
+
+	app.Post("/users/settings/update-email", auth.IsUser, handlers.UpdateEmail)
 }

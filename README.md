@@ -74,3 +74,5 @@ $ go run ./src/main.go
 ## Settings Routes
 
 - POST    /users/settings/update-password  { oldPassword, newPassword }
+- POST    /users/settings/update-username  { password, username }
+- POST    /users/settings/update-email     { password, email }

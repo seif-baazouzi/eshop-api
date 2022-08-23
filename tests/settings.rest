@@ -18,3 +18,14 @@ Content-Type: application/json
   "password": "test"
 }
 
+###
+
+
+POST  http://127.0.0.1:3000/users/settings/update-email
+X-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20ifQ.OntVj6u8x_LkKSS_R76aE03-SgTxmEBcMGng3TivPiA
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "test"
+}
