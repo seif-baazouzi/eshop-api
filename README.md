@@ -70,3 +70,7 @@ $ go run ./src/main.go
 - GET     /carts/user/items/:cartID
 - POST    /carts  { address, shopName, items }
 - PUT     /carts/:cartID/:status
+
+## Settings Routes
+
+- POST    /users/settings/update-password  { oldPassword, newPassword }

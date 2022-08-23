@@ -32,6 +32,7 @@ func main() {
 	routes.SetupItemsRoutes(app)
 	routes.SetupCommentsRoutes(app)
 	routes.SetupCartsRoutes(app)
+	routes.SetupSettingsRoutes(app)
 
 	app.Listen(":3000")
 }
