@@ -12,4 +12,6 @@ func SetupSettingsRoutes(app *fiber.App) {
 	app.Post("/users/settings/update-username", auth.IsUser, handlers.UpdateUsername)
 
 	app.Post("/users/settings/update-email", auth.IsUser, handlers.UpdateEmail)
+
+	app.Delete("/users/settings/delete-account", auth.IsUser, handlers.DeleteAccount)
 }
